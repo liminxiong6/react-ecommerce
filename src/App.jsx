@@ -2,13 +2,18 @@ import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 
 import ProductsPage from "./pages/Product";
-import { loader as productsLoader } from "./components/Products";
+import { Provider } from "react-redux";
+import { store } from "../store";
 
 const router = createBrowserRouter([
-  { path: "/products", element: <ProductsPage />, loader: productsLoader },
+  { path: "/products", element: <ProductsPage /> },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 
 export default App;

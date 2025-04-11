@@ -21,10 +21,6 @@ const ProductViewModal = ({ isOpen, setIsOpen, product, isAvailable }) => {
     specialPrice,
   } = product;
 
-  function open() {
-    setIsOpen(true);
-  }
-
   function close() {
     setIsOpen(false);
   }
