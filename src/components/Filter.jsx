@@ -7,7 +7,7 @@ import {
   Button,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { FiArrowUp, FiRefreshCw, FiSearch } from "react-icons/fi";
+import { FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch } from "react-icons/fi";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 const Filter = () => {
@@ -20,61 +20,63 @@ const Filter = () => {
   ];
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const params = new URLSearchParams(searchParams); // create the paramsURL based on the filter
-  const pathname = useLocation().pathname;
-  const navigate = useNavigate();
 
   const [category, setCategory] = useState("all");
   const [sortOrder, setSortOrder] = useState("asc");
   const [searchTerm, setSearchTerm] = useState("");
 
+  // when the user navigate to this url(for example through the external link)
   useEffect(() => {
-    const currentCategory = searchParams.get("category") || "all";
-    const currentSortOrder = searchParams.get("sortby") || "asc";
-    const currentSearchTerm = searchParams.get("keyword") || "";
-
-    setCategory(currentCategory);
-    setSortOrder(currentSortOrder);
-    setSearchTerm(currentSearchTerm);
+    setCategory(searchParams.get("category") || "all");
+    setSortOrder(searchParams.get("sortby") || "asc");
+    setSearchTerm(searchParams.get("keyword") || "");
   }, [searchParams]);
 
+  // when keyword change, timeout give use some time to typing before navigate the url
   useEffect(() => {
     const handler = setTimeout(() => {
-      if (searchTerm) {
-        searchParams.set("keyword", searchTerm);
-      } else {
-        searchParams.delete("keyword");
-      }
-      navigate(`${pathname}?${searchParams.toString()}`);
+      setSearchParams((prevParams) => {
+        if (searchTerm) {
+          prevParams.set("keyword", searchTerm); // <-- append key-value pair
+        } else {
+          prevParams.delete("keyword");
+        }
+        return prevParams;
+      });
     }, 700);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [searchParams, searchTerm, pathname, navigate]);
+  }, [searchTerm, setSearchParams]);
 
   const handleCategoryChange = (event) => {
     const selectedCategory = event.target.value;
-
-    if (selectedCategory === "all") {
-      params.delete("category");
-    } else {
-      params.set("category", selectedCategory);
-    }
-    navigate(`${pathname}?${params}`);
+    setSearchParams((prevParams) => {
+      if (selectedCategory === "all") {
+        prevParams.delete("category"); // <-- append key-value pair
+      } else {
+        prevParams.set("category", selectedCategory);
+      }
+      return prevParams;
+    });
     setCategory(selectedCategory);
   };
 
   const toggleSortOrder = () => {
     const newOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSearchParams((prevParams) => {
+      prevParams.set("sortby", newOrder);
+      return prevParams;
+    });
     setSortOrder(newOrder);
-
-    params.set("sortby", newOrder);
-    navigate(`${pathname}?${params}`);
   };
 
   const handleClearFilters = () => {
-    navigate({ pathname: window.location.pathname });
+    setSearchParams();
+    setCategory("all");
+    setSortOrder("asc");
+    setSearchTerm("");
   };
 
   return (
@@ -114,7 +116,7 @@ const Filter = () => {
           </Select>
         </FormControl>
         {/* Sort Button*/}
-        <Tooltip title="Sorted by price: asc">
+        <Tooltip title={`Sorted by price: ${sortOrder}`}>
           <Button
             variant="contained"
             color="primary"
@@ -122,7 +124,11 @@ const Filter = () => {
             onClick={toggleSortOrder}
           >
             Sort By
-            <FiArrowUp size={20} />
+            {sortOrder === "asc" ? (
+              <FiArrowUp size={20} />
+            ) : (
+              <FiArrowDown size={20} />
+            )}
           </Button>
         </Tooltip>
         <button
