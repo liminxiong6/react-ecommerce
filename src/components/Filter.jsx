@@ -6,8 +6,9 @@ import {
   Tooltip,
   Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiArrowUp, FiRefreshCw, FiSearch } from "react-icons/fi";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 const Filter = () => {
   const categories = [
@@ -18,10 +19,62 @@ const Filter = () => {
     { categoryId: 5, categoryName: "Toys" },
   ];
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = new URLSearchParams(searchParams); // create the paramsURL based on the filter
+  const pathname = useLocation().pathname;
+  const navigate = useNavigate();
+
   const [category, setCategory] = useState("all");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const currentCategory = searchParams.get("category") || "all";
+    const currentSortOrder = searchParams.get("sortby") || "asc";
+    const currentSearchTerm = searchParams.get("keyword") || "";
+
+    setCategory(currentCategory);
+    setSortOrder(currentSortOrder);
+    setSearchTerm(currentSearchTerm);
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (searchTerm) {
+        searchParams.set("keyword", searchTerm);
+      } else {
+        searchParams.delete("keyword");
+      }
+      navigate(`${pathname}?${searchParams.toString()}`);
+    }, 700);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchParams, searchTerm, pathname, navigate]);
 
   const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
+    const selectedCategory = event.target.value;
+
+    if (selectedCategory === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", selectedCategory);
+    }
+    navigate(`${pathname}?${params}`);
+    setCategory(selectedCategory);
+  };
+
+  const toggleSortOrder = () => {
+    const newOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newOrder);
+
+    params.set("sortby", newOrder);
+    navigate(`${pathname}?${params}`);
+  };
+
+  const handleClearFilters = () => {
+    navigate({ pathname: window.location.pathname });
   };
 
   return (
@@ -31,6 +84,8 @@ const Filter = () => {
         <input
           type="text"
           placeholder="Search Products"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="broder-gray-400 w-full rounded-md border py-2 pr-4 pl-10 text-slate-800 focus:ring-1 focus:ring-[#1976d2] focus:outline-none"
         />
         <FiSearch className="size={20} absolute left-3 text-slate-800" />
@@ -64,12 +119,16 @@ const Filter = () => {
             variant="contained"
             color="primary"
             className="flex h-10 items-center gap-2"
+            onClick={toggleSortOrder}
           >
             Sort By
             <FiArrowUp size={20} />
           </Button>
         </Tooltip>
-        <button className="flex cursor-pointer items-center gap-2 rounded-md bg-rose-800 px-3 py-2 text-white shadow-md transition-all duration-300 ease-in hover:bg-rose-900 hover:shadow-lg focus:outline-none">
+        <button
+          className="flex cursor-pointer items-center gap-2 rounded-md bg-rose-800 px-3 py-2 text-white shadow-md transition-all duration-300 ease-in hover:bg-rose-900 hover:shadow-lg focus:outline-none"
+          onClick={handleClearFilters}
+        >
           <FiRefreshCw className="font-semibold" size={16} />
           <span className="font-semibold">Clear Filter</span>
         </button>
