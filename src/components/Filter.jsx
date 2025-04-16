@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch } from "react-icons/fi";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const Filter = () => {
   const categories = [
@@ -21,16 +21,12 @@ const Filter = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [category, setCategory] = useState("all");
-  const [sortOrder, setSortOrder] = useState("asc");
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // when the user navigate to this url(for example through the external link)
-  useEffect(() => {
-    setCategory(searchParams.get("category") || "all");
-    setSortOrder(searchParams.get("sortby") || "asc");
-    setSearchTerm(searchParams.get("keyword") || "");
-  }, [searchParams]);
+  // Derived from URL
+  const category = searchParams.get("category") || "all";
+  const sortOrder = searchParams.get("sortby") || "asc";
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("keyword") || "",
+  );
 
   // when keyword change, timeout give use some time to typing before navigate the url
   useEffect(() => {
@@ -60,7 +56,6 @@ const Filter = () => {
       }
       return prevParams;
     });
-    setCategory(selectedCategory);
   };
 
   const toggleSortOrder = () => {
@@ -69,14 +64,10 @@ const Filter = () => {
       prevParams.set("sortby", newOrder);
       return prevParams;
     });
-    setSortOrder(newOrder);
   };
 
   const handleClearFilters = () => {
     setSearchParams();
-    setCategory("all");
-    setSortOrder("asc");
-    setSearchTerm("");
   };
 
   return (

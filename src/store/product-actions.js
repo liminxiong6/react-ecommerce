@@ -1,12 +1,12 @@
-import api from "../src/api/api";
+import api from "../api/api";
 import { errorActions } from "./error-slice";
 import { productActions } from "./product-slice";
 
-export const fetchProducts = () => {
+export const fetchProducts = (queryString) => {
   return async (dispatch) => {
     try {
       dispatch(errorActions.isFetching());
-      const { data } = await api.get("/public/products");
+      const { data } = await api.get(`/public/products?${queryString}`);
       dispatch(
         productActions.replaceProducts({
           products: data.content,
@@ -18,7 +18,7 @@ export const fetchProducts = () => {
       );
       dispatch(errorActions.isSuccess());
     } catch (error) {
-      console.log(error);
+      console.error(error);
       dispatch(
         errorActions.isError(
           error?.response?.data?.message || "Failed to fetch products",

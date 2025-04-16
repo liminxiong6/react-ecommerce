@@ -1,22 +1,18 @@
 import React, { useEffect } from "react";
 import ProductCard from "./ProductCard";
-import { fetchProducts } from "../../store/product-actions";
+import { fetchProducts } from "../store/product-actions";
 import { useDispatch, useSelector } from "react-redux";
 import { FaExclamationTriangle } from "react-icons/fa";
-import Filter from "./Filter";
+import useProducFilter from "../hook/useProductFilter";
 
 const Products = () => {
   const { products } = useSelector((state) => state.product);
   const { isLoading, errorMessage } = useSelector((state) => state.error);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+  useProducFilter();
 
   return (
-    <div className="px-4 py-14 sm:px-8 lg:px-14 2xl:mx-auto 2xl:w-[90%]">
-      <Filter />
+    <div>
       {isLoading ? (
         <p>Loading...</p>
       ) : errorMessage ? (
