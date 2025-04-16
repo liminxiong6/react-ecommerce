@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: null,
-  categories: null,
+  categories: [],
   pagination: {},
 };
 
@@ -21,6 +21,9 @@ export const productSlice = createSlice({
         totalElements,
         lastPage,
       };
+    },
+    replaceCategories: (state, action) => {
+      state.categories = action.payload;
     },
   },
 });

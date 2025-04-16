@@ -10,15 +10,7 @@ import React, { useEffect, useState } from "react";
 import { FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch } from "react-icons/fi";
 import { useSearchParams } from "react-router-dom";
 
-const Filter = () => {
-  const categories = [
-    { categoryId: 1, categoryName: "Electronics" },
-    { categoryId: 2, categoryName: "Clothing" },
-    { categoryId: 3, categoryName: "Furniture" },
-    { categoryId: 4, categoryName: "Books" },
-    { categoryId: 5, categoryName: "Toys" },
-  ];
-
+const Filter = ({ categories }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Derived from URL
@@ -69,7 +61,6 @@ const Filter = () => {
   const handleClearFilters = () => {
     setSearchParams();
   };
-
   return (
     <div className="justify-enter flex flex-col-reverse items-center gap-4 lg:flex-row lg:justify-between">
       {/* Search Bar */}

@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 
-import ProductsPage from "./pages/Product";
+import Products from "./components/Products";
 
-const router = createBrowserRouter([{ path: "/", element: <ProductsPage /> }]);
+const router = createBrowserRouter([{ path: "/", element: <Products /> }]);
 
 function App() {
   return <RouterProvider router={router} />;

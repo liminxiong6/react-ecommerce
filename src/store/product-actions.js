@@ -27,3 +27,21 @@ export const fetchProducts = (queryString) => {
     }
   };
 };
+
+export const fetchCategories = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(errorActions.categoryLoader());
+      const { data } = await api.get("/public/categories");
+      dispatch(productActions.replaceCategories(data.content));
+      dispatch(errorActions.categorySuccess());
+    } catch (error) {
+      console.error(error);
+      dispatch(
+        errorActions.categoryError(
+          error?.response?.data?.message || "Failed to fetch categories",
+        ),
+      );
+    }
+  };
+};

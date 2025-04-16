@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   errorMessage: null,
+  categoryLoader: false,
+  categoryError: null,
 };
 
 const errorSlice = createSlice({
@@ -18,6 +20,17 @@ const errorSlice = createSlice({
     isError(state, action) {
       state.isLoading = false;
       state.errorMessage = action.payload;
+    },
+    categoryLoader(state) {
+      state.categoryLoader = true;
+    },
+    categorySuccess(state) {
+      state.categoryLoader = false;
+      state.categoryError = null;
+    },
+    categoryError(state, action) {
+      state.categoryLoader = false;
+      state.categoryError = action.payload;
     },
   },
 });
