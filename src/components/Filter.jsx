@@ -61,6 +61,8 @@ const Filter = ({ categories }) => {
   const handleClearFilters = () => {
     setSearchParams();
   };
+
+  if (!categories || categories.length === 0) return;
   return (
     <div className="justify-enter flex flex-col-reverse items-center gap-4 lg:flex-row lg:justify-between">
       {/* Search Bar */}

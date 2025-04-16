@@ -5,6 +5,7 @@ import useProducFilter from "../hook/useProductFilter";
 import Filter from "./Filter";
 import { useEffect } from "react";
 import { fetchCategories } from "../store/product-actions";
+import Loader from "./Loader";
 
 const Products = () => {
   const { products, categories } = useSelector((state) => state.product);
@@ -21,7 +22,7 @@ const Products = () => {
     <div className="px-4 py-14 sm:px-8 lg:px-14 2xl:mx-auto 2xl:w-[90%]">
       <Filter categories={categories ? categories : []} />
       {isLoading ? (
-        <p>Loading...</p>
+        <Loader text={"Products loading...."} />
       ) : errorMessage ? (
         <div className="flex h-[200px] items-center justify-center">
           <FaExclamationTriangle className="mr-2 text-3xl text-slate-800" />
