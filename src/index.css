@@ -13,19 +13,7 @@
     --color-banner-color3: #21ad61;
     --color-banner-color4: #723da6;
 
-    --backgroundImage-custom-gradient: linear-gradient(
-        to right,
-        #111827,
-        #1f2937
-    );
-    --backgroundImage-button-gradient: linear-gradient(
-        to right,
-        #7e22ce,
-        #ef4444
-    );
-    --backgroundImage-custom-gradient2: linear-gradient(
-        135deg,
-        #f5f5f5,
-        #eae7dc
-    );
+    --custom-gradient: linear-gradient(to right, #111827, #1f2937);
+    --custom-gradient1: linear-gradient(to right, #7e22ce, #ef4444);
+    --custom-gradient2: linear-gradient(135deg, #f5f5f5, #eae7dc);
 }
