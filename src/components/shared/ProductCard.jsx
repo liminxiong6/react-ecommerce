@@ -12,6 +12,7 @@ const ProductCard = ({
     price,
     discount,
     specialPrice,
+    about = false,
 }) => {
     const btnLoader = false;
     const [openProductViewModal, setOpenProductViewModal] = useState(false);
@@ -19,7 +20,9 @@ const ProductCard = ({
     const isProductAvailable = quantity && Number(quantity) > 0;
 
     function handleProductView() {
-        setOpenProductViewModal(true);
+        if (!about) {
+            setOpenProductViewModal(true);
+        }
     }
     return (
         <>
@@ -46,35 +49,38 @@ const ProductCard = ({
                             {truncateText(description, 80)}
                         </p>
                     </div>
-
-                    {/* price */}
-                    <div className="flex items-end justify-between">
-                        {specialPrice ? (
-                            <div className="flex flex-col">
-                                <span className="text-gray-700 line-through">
-                                    ${Number(price).toFixed(2)}
-                                </span>
-                                <span className="text-xl font-bold text-slate-700">
-                                    ${Number(specialPrice).toFixed(2)}
-                                </span>
-                            </div>
-                        ) : (
-                            <div>
-                                {" "}
-                                <span className="text-xl font-bold text-slate-700">
-                                    ${Number(price).toFixed(2)}
-                                </span>
-                            </div>
-                        )}
-                        {/* product available */}
-                        <button
-                            disabled={!isProductAvailable || btnLoader}
-                            className={`bg-blue-500 ${isProductAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"} flex w-36 cursor-pointer items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm text-white transition-colors duration-300`}
-                        >
-                            <FaShoppingCart />
-                            {isProductAvailable ? "Add to Cart" : " Stock Out"}
-                        </button>
-                    </div>
+                    {!about && (
+                        <div className="flex items-end justify-between">
+                            {/* price */}
+                            {specialPrice ? (
+                                <div className="flex flex-col">
+                                    <span className="text-gray-700 line-through">
+                                        ${Number(price).toFixed(2)}
+                                    </span>
+                                    <span className="text-xl font-bold text-slate-700">
+                                        ${Number(specialPrice).toFixed(2)}
+                                    </span>
+                                </div>
+                            ) : (
+                                <div>
+                                    {" "}
+                                    <span className="text-xl font-bold text-slate-700">
+                                        ${Number(price).toFixed(2)}
+                                    </span>
+                                </div>
+                            )}
+                            {/* product available */}
+                            <button
+                                disabled={!isProductAvailable || btnLoader}
+                                className={`bg-blue-500 ${isProductAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"} flex w-36 cursor-pointer items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm text-white transition-colors duration-300`}
+                            >
+                                <FaShoppingCart />
+                                {isProductAvailable
+                                    ? "Add to Cart"
+                                    : " Stock Out"}
+                            </button>
+                        </div>
+                    )}
                 </div>
                 <ProductViewModal
                     isOpen={openProductViewModal}
