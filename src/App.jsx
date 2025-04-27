@@ -7,6 +7,7 @@ import RootLayout from "./pages/Root";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import { Toaster } from "react-hot-toast";
+import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
     {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
             { path: "products", element: <Products /> },
             { path: "about", element: <About /> },
             { path: "contact", element: <Contact /> },
+            { path: "cart", element: <Cart /> },
         ],
     },
 ]);
