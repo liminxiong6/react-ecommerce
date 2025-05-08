@@ -1,16 +1,44 @@
 import { useState } from "react";
 import { HiOutlineTrash } from "react-icons/hi";
 import SetQuantity from "./SetQuantity";
+import { useDispatch } from "react-redux";
+import {
+    decreaseCartQuantity,
+    increaseCartQuantity,
+} from "../../store/cart-actions";
+import toast from "react-hot-toast";
 
 const ItemContent = ({
-    image,
     productId,
     productName,
-    quantity,
+    image,
     description,
+    quantity,
+    price,
+    discount,
     specialPrice,
 }) => {
     const [currentQuantity, setCurrentQuantity] = useState(quantity);
+    const dispatch = useDispatch();
+
+    const handleQtyIncrease = (productId) => {
+        dispatch(
+            increaseCartQuantity(
+                productId,
+                toast,
+                currentQuantity,
+                setCurrentQuantity,
+            ),
+        );
+    };
+
+    const handleQtyDecrease = (productId) => {
+        if (currentQuantity > 1) {
+            setCurrentQuantity((qty) => qty - 1);
+            dispatch(decreaseCartQuantity(productId, currentQuantity));
+        }
+    };
+
     return (
         <div className="md:text-md grid grid-cols-4 items-center border-t-[1px] border-slate-200 py-4 text-sm md:grid-cols-5">
             <div className="flex flex-col gap-2 justify-self-start md:col-span-2">
@@ -42,9 +70,12 @@ const ItemContent = ({
             <div className="justify-self-center">
                 <SetQuantity
                     quantity={currentQuantity}
-                    cardCounter={true}
-                    handleQtyIncrease={() => {}}
-                    handleQtyDecrease={() => {}}
+                    handleQtyIncrease={() => {
+                        handleQtyIncrease(productId);
+                    }}
+                    handleQtyDecrease={() => {
+                        handleQtyDecrease(productId);
+                    }}
                 />
             </div>
             <div className="justify-self-center text-sm font-semibold text-slate-600 lg:text-[17px]">

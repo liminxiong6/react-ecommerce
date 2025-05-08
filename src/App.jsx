@@ -7,7 +7,7 @@ import RootLayout from "./pages/Root";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import { Toaster } from "react-hot-toast";
-import Cart from "./pages/Cart";
+import Cart from "./components/cart/Cart";
 
 const router = createBrowserRouter([
     {

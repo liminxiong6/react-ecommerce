@@ -1,10 +1,9 @@
 import { MdArrowBack, MdShoppingCart } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import ItemContent from "../components/cart/ItemContent";
+import ItemContent from "./ItemContent";
 
 const Cart = () => {
-    const dispatch = useDispatch();
     const { cart } = useSelector((state) => state.cart);
     const newCart = { ...cart };
 

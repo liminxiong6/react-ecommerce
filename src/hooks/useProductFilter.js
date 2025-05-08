@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { fetchProducts } from "../store/product-actions";
 
+// a hooker to filter products
 const useProducFilter = () => {
     const [searchParams] = useSearchParams();
     const dispatch = useDispatch();
