@@ -60,3 +60,8 @@ export const decreaseCartQuantity = (productId, newQuantity) => {
         dispatch(cartActions.addCart({ productId, quantity: newQuantity }));
     };
 };
+
+export const removeFromCart = (data, toast) => (dispatch) => {
+    dispatch(cartActions.removeCart(data));
+    toast.success(`${data.productName} removed from cart`);
+};

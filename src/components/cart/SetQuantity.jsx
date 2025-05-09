@@ -7,15 +7,14 @@ const SetQuantity = ({ quantity, handleQtyIncrease, handleQtyDecrease }) => {
             <div className="flex flex-col items-center gap-4 text-sm md:flex-row lg:text-[22px]">
                 <button
                     disabled={quantity <= 1}
-                    className="rounded border-[1.2px] border-slate-400 px-3 py-1"
+                    className="rounded border-[1.2px] border-slate-400 px-3 py-1 hover:bg-slate-100"
                     onClick={handleQtyDecrease}
                 >
                     -
                 </button>
                 <div className="text-sm">{quantity}</div>
                 <button
-                    disabled={quantity <= 1}
-                    className="rounded border-[1.2px] border-slate-400 px-3 py-1"
+                    className="rounded border-[1.2px] border-slate-400 px-3 py-1 hover:bg-slate-100"
                     onClick={handleQtyIncrease}
                 >
                     +

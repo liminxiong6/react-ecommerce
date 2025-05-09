@@ -7,10 +7,10 @@ const Cart = () => {
     const { cart } = useSelector((state) => state.cart);
     const newCart = { ...cart };
 
-    newCart.totalPrice = cart?.reduce(
-        (acc, cur) =>
-            acc + Number(cur?.specialPrice) * Number(cur?.quantity, 0),
-    );
+    // newCart.totalPrice = cart?.reduce(
+    //     (acc, cur) =>
+    //         acc + Number(cur?.specialPrice) * Number(cur?.quantity, 0),
+    // );
 
     let cartContent;
     if (!cart || cart.length === 0) {

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import {
     decreaseCartQuantity,
     increaseCartQuantity,
+    removeFromCart,
 } from "../../store/cart-actions";
 import toast from "react-hot-toast";
 
@@ -35,8 +36,12 @@ const ItemContent = ({
     const handleQtyDecrease = (productId) => {
         if (currentQuantity > 1) {
             setCurrentQuantity((qty) => qty - 1);
-            dispatch(decreaseCartQuantity(productId, currentQuantity));
+            dispatch(decreaseCartQuantity(productId, currentQuantity - 1));
         }
+    };
+
+    const removeItemFromCart = (productId, productName) => {
+        dispatch(removeFromCart({ productId, productName }, toast));
     };
 
     return (
@@ -56,7 +61,9 @@ const ItemContent = ({
                 </div>
                 <div className="mt-2">
                     <button
-                        onClick={() => {}}
+                        onClick={() => {
+                            removeItemFromCart(productId, productName);
+                        }}
                         className="flex cursor-pointer items-center gap-2 rounded-md border border-rose-600 px-4 py-1 text-xs font-semibold text-rose-600 transition-colors duration-200 hover:bg-red-50"
                     >
                         <HiOutlineTrash size={15} />

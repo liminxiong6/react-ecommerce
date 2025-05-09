@@ -27,6 +27,12 @@ export const cartSlice = createSlice({
                 state.cart.push(productToAdd);
             }
         },
+        // remove cartItem
+        removeCart(state, action) {
+            state.cart = state.cart.filter(
+                (item) => item.productId !== action.payload.productId,
+            );
+        },
     },
 });
 
