@@ -8,6 +8,8 @@ import {
     removeFromCart,
 } from "../../store/cart-actions";
 import toast from "react-hot-toast";
+import { formatPrice } from "../../utils/formatPrice";
+import { truncateText } from "../../utils/truncateText";
 
 const ItemContent = ({
     productId,
@@ -49,7 +51,7 @@ const ItemContent = ({
             <div className="flex flex-col gap-2 justify-self-start md:col-span-2">
                 <div className="flex flex-col gap-0 text-lg text-slate-800 sm:gap-3 md:col-span-2 md:flex-row lg:gap-4">
                     <h3 className="text-sm font-semibold text-slate-600 lg:text-[17px]">
-                        {productName}
+                        {truncateText(productName)}
                     </h3>
                 </div>
                 <div className="w-12 sm:w-24 md:w-36">
@@ -72,7 +74,7 @@ const ItemContent = ({
                 </div>
             </div>
             <div className="justify-self-center text-sm font-semibold text-slate-600 lg:text-[17px]">
-                {Number(specialPrice)}
+                {formatPrice(Number(specialPrice))}
             </div>
             <div className="justify-self-center">
                 <SetQuantity
@@ -86,7 +88,7 @@ const ItemContent = ({
                 />
             </div>
             <div className="justify-self-center text-sm font-semibold text-slate-600 lg:text-[17px]">
-                {Number(quantity) * Number(specialPrice)}
+                {formatPrice(Number(quantity) * Number(specialPrice))}
             </div>
         </div>
     );
