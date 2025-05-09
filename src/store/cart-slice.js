@@ -22,7 +22,7 @@ export const cartSlice = createSlice({
             );
             // already exist in cart
             if (existingProduct) {
-                existingProduct.quantity = productToAdd.quantity;
+                existingProduct.quantity += productToAdd.quantity;
             } else {
                 state.cart.push(productToAdd);
             }

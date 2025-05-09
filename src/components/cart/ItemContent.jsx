@@ -38,7 +38,7 @@ const ItemContent = ({
     const handleQtyDecrease = (productId) => {
         if (currentQuantity > 1) {
             setCurrentQuantity((qty) => qty - 1);
-            dispatch(decreaseCartQuantity(productId, currentQuantity - 1));
+            dispatch(decreaseCartQuantity(productId));
         }
     };
 

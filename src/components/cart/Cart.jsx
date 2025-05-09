@@ -3,15 +3,16 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ItemContent from "./ItemContent";
 import CartEmpty from "./CartEmpty";
+import { formatPrice } from "../../utils/formatPrice";
 
 const Cart = () => {
     const { cart } = useSelector((state) => state.cart);
     const newCart = { ...cart };
 
-    // newCart.totalPrice = cart?.reduce(
-    //     (acc, cur) =>
-    //         acc + Number(cur?.specialPrice) * Number(cur?.quantity, 0),
-    // );
+    newCart.totalPrice = cart?.reduce(
+        (acc, cur) => acc + Number(cur?.specialPrice) * Number(cur?.quantity),
+        0,
+    );
 
     if (!cart || cart.length === 0) {
         return <CartEmpty />;
@@ -55,7 +56,7 @@ const Cart = () => {
                 <div className="flex flex-col gap-1 text-sm">
                     <div className="flex w-full justify-between text-sm font-semibold md:text-lg">
                         <span>Subtotal</span>
-                        <span>$400</span>
+                        <span>{formatPrice(newCart?.totalPrice)}</span>
                     </div>
                     <p className="text-slate-500">
                         Taxes and shipping calculated at checkout

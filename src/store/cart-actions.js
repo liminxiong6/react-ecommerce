@@ -41,7 +41,7 @@ export const increaseCartQuantity = (
             dispatch(
                 cartActions.addCart({
                     productId,
-                    quantity: currentQuantity + 1,
+                    quantity: 1,
                 }),
             );
             localStorage.setItem(
@@ -55,9 +55,9 @@ export const increaseCartQuantity = (
 };
 
 // decrease by 1
-export const decreaseCartQuantity = (productId, newQuantity) => {
+export const decreaseCartQuantity = (productId) => {
     return (dispatch) => {
-        dispatch(cartActions.addCart({ productId, quantity: newQuantity }));
+        dispatch(cartActions.addCart({ productId, quantity: -1 }));
     };
 };
 

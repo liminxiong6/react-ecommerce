@@ -4,10 +4,12 @@ import { FaShoppingCart, FaSignInAlt, FaStore } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosMenu } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
     const path = useLocation().pathname;
     const [navbarOpen, setNavbarOpen] = useState(false);
+    const { cart } = useSelector((state) => state.cart);
 
     return (
         <div className="sticky top-0 z-50 flex h-[70px] items-center bg-(image:--custom-gradient) text-white">
@@ -55,6 +57,7 @@ const Navbar = () => {
                             Contact
                         </Link>
                     </li>
+                    {/* cart badge */}
                     <li className="border-1 border-transparent p-4 font-[500] transition-all duration-150 hover:border-white">
                         <Link
                             className={`${path === "/" ? "font-semibold text-white" : "text-gray-200"}`}
@@ -62,7 +65,7 @@ const Navbar = () => {
                         >
                             <Badge
                                 showZero
-                                badgeContent={0}
+                                badgeContent={cart?.length || 0}
                                 color="primary"
                                 overlap="circular"
                                 anchorOrigin={{
