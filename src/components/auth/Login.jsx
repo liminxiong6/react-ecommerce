@@ -3,19 +3,26 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineLogin } from "react-icons/ai";
 import InputField from "../shared/InputField";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { authenticateSignInUser } from "../../store/auth-actions";
 
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [loader, setLoader] = useState(false);
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm({ mode: "onTouched" });
 
     const loginHandler = async (data) => {
-        console.log("login click");
+        dispatch(
+            authenticateSignInUser(data, toast, reset, navigate, setLoader),
+        );
     };
 
     return (
@@ -40,6 +47,7 @@ const Login = () => {
                         message="*Username is required"
                         register={register}
                         errors={errors}
+                        placeholder="Enter your username"
                     />
                     <InputField
                         label="Password"
@@ -49,6 +57,7 @@ const Login = () => {
                         message="*Password is required"
                         register={register}
                         errors={errors}
+                        placeholder="Enter your password"
                     />
                 </div>
                 <button

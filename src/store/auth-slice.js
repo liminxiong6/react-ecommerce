@@ -12,7 +12,11 @@ const initialState = {
 export const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {},
+    reducers: {
+        loginUser(state, action) {
+            state.user = action.payload;
+        },
+    },
 });
 
 export const authActions = authSlice.actions;
