@@ -10,6 +10,7 @@ const Navbar = () => {
     const path = useLocation().pathname;
     const [navbarOpen, setNavbarOpen] = useState(false);
     const { cart } = useSelector((state) => state.cart);
+    const { user } = useSelector((state) => state.auth);
 
     return (
         <div className="sticky top-0 z-50 flex h-[70px] items-center bg-(image:--custom-gradient) text-white">
@@ -77,15 +78,21 @@ const Navbar = () => {
                             </Badge>
                         </Link>
                     </li>
-                    <li className="border-1 border-transparent p-4 font-[500] transition-all duration-150 hover:border-white">
-                        <Link
-                            className={`${path === "/" ? "font-semibold text-white" : "text-gray-200"} flex items-center gap-3 rounded-lg bg-gradient-to-r from-purple-600 to-red-500 px-4 py-2 transition duration-300 ease-in-out hover:from-purple-500 hover:to-red-400`}
-                            to="/login"
-                        >
-                            <FaSignInAlt />
-                            <span>Login</span>
-                        </Link>
-                    </li>
+                    {user && user.id ? (
+                        <li className="p-4 font-[500]">
+                            <p>Welcome, {user.username}</p>
+                        </li>
+                    ) : (
+                        <li className="border-1 border-transparent p-4 font-[500] transition-all duration-150 hover:border-white">
+                            <Link
+                                className={`${path === "/" ? "font-semibold text-white" : "text-gray-200"} flex items-center gap-3 rounded-lg bg-gradient-to-r from-purple-600 to-red-500 px-4 py-2 transition duration-300 ease-in-out hover:from-purple-500 hover:to-red-400`}
+                                to="/login"
+                            >
+                                <FaSignInAlt />
+                                <span>Login</span>
+                            </Link>
+                        </li>
+                    )}
                 </ul>
                 <button
                     onClick={() => setNavbarOpen(!navbarOpen)}
