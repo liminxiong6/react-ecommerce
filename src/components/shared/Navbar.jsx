@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { IoIosMenu } from "react-icons/io";
 import { useSelector } from "react-redux";
+import UserMenu from "./UserMenu";
 
 const Navbar = () => {
     const path = useLocation().pathname;
@@ -80,7 +81,7 @@ const Navbar = () => {
                     </li>
                     {user && user.id ? (
                         <li className="p-4 font-[500]">
-                            <p>Welcome, {user.username}</p>
+                            <UserMenu user={user} />
                         </li>
                     ) : (
                         <li className="border-1 border-transparent p-4 font-[500] transition-all duration-150 hover:border-white">
