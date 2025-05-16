@@ -5,6 +5,7 @@ import { BiUser } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoExitOutline } from "react-icons/io5";
+import Backdrop from "./Backdrop";
 
 const UserMenu = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -62,6 +63,7 @@ const UserMenu = () => {
                     </div>
                 </MenuItem>
             </Menu>
+            {open && <Backdrop />}
         </div>
     );
 };
